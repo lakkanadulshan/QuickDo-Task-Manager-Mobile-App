@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">QuickDo</string>
+    <string name="welcome_back">Welcome Back to the app</string>
+    <string name="email_address">Email address</string>
+    <string name="email_hint">email</string>
+    <string name="password">Password</string>
+    <string name="forget_password">Forget Password ?</string>
+    <string name="password_hint">password</string>
+    <string name="keep_me_signed_in">Keep me sign in</string>
+    <string name="login">Login</string>
+    <string name="or_sign_with">or sign with</string>
+    <string name="continue_with_google">Continue with Google</string>
+    <string name="create_an_account">Create an account</string>
+
+    <!-- Google Web Client ID for Firebase Auth -->
+    <string name="default_web_client_id">77353216970-qkld7eji89tjdmtdkkb8c3cnqcvvsn0m.apps.googleusercontent.com</string>
+</resources>
