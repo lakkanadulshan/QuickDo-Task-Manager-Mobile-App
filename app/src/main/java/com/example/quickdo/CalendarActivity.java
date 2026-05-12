@@ -17,7 +17,6 @@ import java.util.List;
 
 public class CalendarActivity extends AppCompatActivity {
 
-    private CalendarView calendarView;
     private RecyclerView rvTasks;
     private TaskAdapter adapter;
     private List<TaskModel> taskList;
@@ -34,7 +33,7 @@ public class CalendarActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
 
-        calendarView = findViewById(R.id.calendarView);
+        CalendarView calendarView = findViewById(R.id.calendarView);
         rvTasks = findViewById(R.id.rvTasks);
         tvSelectedDate = findViewById(R.id.tvSelectedDate);
 
@@ -49,6 +48,11 @@ public class CalendarActivity extends AppCompatActivity {
             @Override
             public void onStatusToggle(TaskModel task) {
                 toggleTaskStatus(task);
+            }
+
+            @Override
+            public void onEditClick(TaskModel task) {
+                editTask(task);
             }
         });
         rvTasks.setLayoutManager(new LinearLayoutManager(this));
@@ -102,16 +106,11 @@ public class CalendarActivity extends AppCompatActivity {
     private void filterTasks(long selectedTimestamp) {
         filteredList.clear();
         for (TaskModel task : taskList) {
-            // Compare dates only (ignoring time if tasks are saved at 00:00:00)
-            // But since some might have time, let's normalize both to start of day
             if (isSameDay(task.getTimestamp(), selectedTimestamp)) {
                 filteredList.add(task);
             }
         }
         adapter.notifyDataSetChanged();
-        if (filteredList.isEmpty()) {
-            Toast.makeText(this, "No tasks for this day", Toast.LENGTH_SHORT).show();
-        }
     }
 
     private boolean isSameDay(long t1, long t2) {
@@ -144,6 +143,15 @@ public class CalendarActivity extends AppCompatActivity {
                 .document(task.getTaskId())
                 .update("status", newStatus)
                 .addOnFailureListener(e -> Toast.makeText(this, "Failed to update status", Toast.LENGTH_SHORT).show());
+    }
+
+    private void editTask(TaskModel task) {
+        Intent intent = new Intent(this, AddTaskActivity.class);
+        intent.putExtra("taskId", task.getTaskId());
+        intent.putExtra("title", task.getTitle());
+        intent.putExtra("description", task.getDescription());
+        intent.putExtra("timestamp", task.getTimestamp());
+        startActivity(intent);
     }
 
     private void deleteTask(TaskModel task) {

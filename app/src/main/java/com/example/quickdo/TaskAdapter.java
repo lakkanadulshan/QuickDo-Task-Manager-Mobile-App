@@ -17,6 +17,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     public interface OnTaskActionListener {
         void onDeleteClick(TaskModel task);
         void onStatusToggle(TaskModel task);
+        void onEditClick(TaskModel task);
     }
 
     public TaskAdapter(List<TaskModel> tasks, OnTaskActionListener actionListener) {
@@ -55,6 +56,12 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             }
         });
 
+        holder.ivEdit.setOnClickListener(v -> {
+            if (actionListener != null) {
+                actionListener.onEditClick(task);
+            }
+        });
+
         holder.ivDelete.setOnClickListener(v -> {
             if (actionListener != null) {
                 actionListener.onDeleteClick(task);
@@ -69,13 +76,14 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
     static class TaskViewHolder extends RecyclerView.ViewHolder {
         TextView tvTaskTitle, tvTaskTime;
-        ImageView ivCheck, ivDelete;
+        ImageView ivCheck, ivEdit, ivDelete;
 
         public TaskViewHolder(@NonNull View itemView) {
             super(itemView);
             tvTaskTitle = itemView.findViewById(R.id.tvTaskTitle);
             tvTaskTime = itemView.findViewById(R.id.tvTaskTime);
             ivCheck = itemView.findViewById(R.id.ivCheck);
+            ivEdit = itemView.findViewById(R.id.ivEdit);
             ivDelete = itemView.findViewById(R.id.ivDelete);
         }
     }

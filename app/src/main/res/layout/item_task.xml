@@ -28,7 +28,7 @@
         android:orientation="horizontal"
         android:paddingHorizontal="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/ivDelete"
+        app:layout_constraintEnd_toStartOf="@id/ivEdit"
         app:layout_constraintStart_toEndOf="@id/ivCheck"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -55,6 +55,18 @@
             android:textSize="14sp" />
 
     </LinearLayout>
+
+    <!-- Edit Icon -->
+    <ImageView
+        android:id="@+id/ivEdit"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="8dp"
+        android:src="@drawable/ic_edit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/ivDelete"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/black" />
 
     <!-- Delete Trash SVG -->
     <ImageView

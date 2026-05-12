@@ -55,6 +55,11 @@ public class MyTasksActivity extends AppCompatActivity {
                 public void onStatusToggle(TaskModel task) {
                     toggleTaskStatus(task);
                 }
+
+                @Override
+                public void onEditClick(TaskModel task) {
+                    editTask(task);
+                }
             });
             rvTasks.setAdapter(adapter);
         }
@@ -188,6 +193,15 @@ public class MyTasksActivity extends AppCompatActivity {
                 .addOnFailureListener(e -> {
                     Toast.makeText(this, "Failed to update status", Toast.LENGTH_SHORT).show();
                 });
+    }
+
+    private void editTask(TaskModel task) {
+        Intent intent = new Intent(this, AddTaskActivity.class);
+        intent.putExtra("taskId", task.getTaskId());
+        intent.putExtra("title", task.getTitle());
+        intent.putExtra("description", task.getDescription());
+        intent.putExtra("timestamp", task.getTimestamp());
+        startActivity(intent);
     }
 
     private void deleteTask(TaskModel task) {
