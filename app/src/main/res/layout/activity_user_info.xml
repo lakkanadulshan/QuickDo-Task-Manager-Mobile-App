@@ -231,11 +231,11 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:orientation="horizontal">
-            <ImageButton android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:background="?attr/selectableItemBackgroundBorderless" android:src="@drawable/grid" app:tint="@color/black" />
-            <ImageButton android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:background="?attr/selectableItemBackgroundBorderless" android:src="@drawable/calendar" app:tint="@color/black" />
-            <ImageButton android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:background="?attr/selectableItemBackgroundBorderless" android:src="@drawable/file__1_" app:tint="@color/black" />
-            <ImageButton android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:background="?attr/selectableItemBackgroundBorderless" android:src="@drawable/settings" app:tint="@color/black" />
-            <ImageButton android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:background="?attr/selectableItemBackgroundBorderless" android:src="@drawable/account_circle" app:tint="@color/primary" />
+            <ImageButton android:id="@+id/navDashboard" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:background="?attr/selectableItemBackgroundBorderless" android:src="@drawable/grid" app:tint="@color/black" />
+            <ImageButton android:id="@+id/navCalendar" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:background="?attr/selectableItemBackgroundBorderless" android:src="@drawable/calendar" app:tint="@color/black" />
+            <ImageButton android:id="@+id/navTasks" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:background="?attr/selectableItemBackgroundBorderless" android:src="@drawable/file" app:tint="@color/black" />
+            <ImageButton android:id="@+id/navSettings" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:background="?attr/selectableItemBackgroundBorderless" android:src="@drawable/settings" app:tint="@color/black" />
+            <ImageButton android:id="@+id/navProfile" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:background="?attr/selectableItemBackgroundBorderless" android:src="@drawable/account_circle" app:tint="@color/primary" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

@@ -28,6 +28,7 @@
         app:layout_constraintTop_toBottomOf="@id/tvTitle">
 
         <TextView
+            android:id="@+id/tabAll"
             android:layout_width="0dp"
             android:layout_height="36dp"
             android:layout_weight="1"
@@ -39,6 +40,7 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/tabTodo"
             android:layout_width="0dp"
             android:layout_height="36dp"
             android:layout_marginStart="8dp"
@@ -52,6 +54,7 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/tabInProgress"
             android:layout_width="0dp"
             android:layout_height="36dp"
             android:layout_marginStart="8dp"
@@ -65,6 +68,7 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/tabDone"
             android:layout_width="0dp"
             android:layout_height="36dp"
             android:layout_marginStart="8dp"
@@ -185,7 +189,7 @@
                 app:tint="@color/black" />
 
             <ImageButton
-                android:id="@+id/navTasks"
+                android:id="@+id/navCalendar"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -194,6 +198,7 @@
                 app:tint="@color/black" />
 
             <ImageButton
+                android:id="@+id/navTasks"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -202,6 +207,7 @@
                 app:tint="#9C27B0" />
 
             <ImageButton
+                android:id="@+id/navSettings"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"

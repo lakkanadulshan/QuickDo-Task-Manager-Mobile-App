@@ -32,6 +32,9 @@
         <activity android:name=".UserInfoActivity" />
         <activity android:name=".DevInfoActivity" />
         <activity android:name=".MainActivity" />
+        <activity android:name=".DashboardActivity" />
+        <activity android:name=".CalendarActivity" />
+        <activity android:name=".SettingsActivity" />
 
     </application>
 

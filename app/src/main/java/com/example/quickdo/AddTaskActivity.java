@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,6 +17,7 @@ public class AddTaskActivity extends AppCompatActivity {
 
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
+    private EditText etTaskTitle, etDescription, etDay, etMonth, etYear;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,49 +27,73 @@ public class AddTaskActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
 
-        EditText etTaskTitle = findViewById(R.id.etTaskTitle);
-        EditText etDescription = findViewById(R.id.etDescription);
+        etTaskTitle = findViewById(R.id.etTaskTitle);
+        etDescription = findViewById(R.id.etDescription);
+        etDay = findViewById(R.id.etDay);
+        etMonth = findViewById(R.id.etMonth);
+        etYear = findViewById(R.id.etYear);
         MaterialButton btnCreate = findViewById(R.id.btnCreate);
 
-        // Navigation Buttons
-        ImageButton navDashboard = findViewById(R.id.navDashboard);
-        ImageButton navTasks = findViewById(R.id.navTasks);
-        ImageButton navProfile = findViewById(R.id.navProfile);
+        // Pre-fill current date
+        Calendar c = Calendar.getInstance();
+        etDay.setText(String.valueOf(c.get(Calendar.DAY_OF_MONTH)));
+        etMonth.setText(String.valueOf(c.get(Calendar.MONTH) + 1));
+        etYear.setText(String.valueOf(c.get(Calendar.YEAR)));
 
         btnCreate.setOnClickListener(v -> {
             String title = etTaskTitle.getText().toString().trim();
             String description = etDescription.getText().toString().trim();
-            
+            String day = etDay.getText().toString().trim();
+            String month = etMonth.getText().toString().trim();
+            String year = etYear.getText().toString().trim();
+
             if (title.isEmpty()) {
                 Toast.makeText(this, "Please enter a task title", Toast.LENGTH_SHORT).show();
-            } else {
-                saveTaskToFirestore(title, description);
+                return;
+            }
+            if (day.isEmpty() || month.isEmpty() || year.isEmpty()) {
+                Toast.makeText(this, "Please enter a valid date", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            try {
+                Calendar taskDate = Calendar.getInstance();
+                taskDate.set(Integer.parseInt(year), Integer.parseInt(month) - 1, Integer.parseInt(day), 0, 0, 0);
+                taskDate.set(Calendar.MILLISECOND, 0);
+                saveTaskToFirestore(title, description, taskDate.getTimeInMillis());
+            } catch (NumberFormatException e) {
+                Toast.makeText(this, "Invalid date format", Toast.LENGTH_SHORT).show();
             }
         });
 
-        if (navDashboard != null) {
-            navDashboard.setOnClickListener(v -> {
-                startActivity(new Intent(AddTaskActivity.this, MyTasksActivity.class));
-                finish();
-            });
-        }
+        // Navigation Buttons
+        findViewById(R.id.navDashboard).setOnClickListener(v -> {
+            startActivity(new Intent(this, DashboardActivity.class));
+            finish();
+        });
 
-        if (navTasks != null) {
-            navTasks.setOnClickListener(v -> {
-                startActivity(new Intent(AddTaskActivity.this, MyTasksActivity.class));
-                finish();
-            });
-        }
+        findViewById(R.id.navCalendar).setOnClickListener(v -> {
+            startActivity(new Intent(this, CalendarActivity.class));
+            finish();
+        });
 
-        if (navProfile != null) {
-            navProfile.setOnClickListener(v -> {
-                startActivity(new Intent(AddTaskActivity.this, UserInfoActivity.class));
-                finish();
-            });
-        }
+        findViewById(R.id.navTasks).setOnClickListener(v -> {
+            startActivity(new Intent(this, MyTasksActivity.class));
+            finish();
+        });
+
+        findViewById(R.id.navSettings).setOnClickListener(v -> {
+            startActivity(new Intent(this, SettingsActivity.class));
+            finish();
+        });
+
+        findViewById(R.id.navProfile).setOnClickListener(v -> {
+            startActivity(new Intent(this, UserInfoActivity.class));
+            finish();
+        });
     }
 
-    private void saveTaskToFirestore(String title, String description) {
+    private void saveTaskToFirestore(String title, String description, long timestamp) {
         String userId = mAuth.getCurrentUser() != null ? mAuth.getCurrentUser().getUid() : null;
         if (userId == null) {
             Toast.makeText(this, "User not logged in", Toast.LENGTH_SHORT).show();
@@ -81,7 +107,7 @@ public class AddTaskActivity extends AppCompatActivity {
         task.put("title", title);
         task.put("description", description);
         task.put("status", "To Do"); // Default status
-        task.put("timestamp", System.currentTimeMillis());
+        task.put("timestamp", timestamp);
 
         db.collection("users")
                 .document(userId)

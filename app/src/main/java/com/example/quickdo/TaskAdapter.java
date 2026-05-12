@@ -7,23 +7,21 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder> {
 
     private List<TaskModel> tasks;
-    private OnTaskDeleteListener deleteListener;
+    private OnTaskActionListener actionListener;
 
-    public interface OnTaskDeleteListener {
+    public interface OnTaskActionListener {
         void onDeleteClick(TaskModel task);
+        void onStatusToggle(TaskModel task);
     }
 
-    public TaskAdapter(List<TaskModel> tasks, OnTaskDeleteListener deleteListener) {
+    public TaskAdapter(List<TaskModel> tasks, OnTaskActionListener actionListener) {
         this.tasks = tasks;
-        this.deleteListener = deleteListener;
+        this.actionListener = actionListener;
     }
 
     @NonNull
@@ -38,20 +36,28 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         TaskModel task = tasks.get(position);
         holder.tvTaskTitle.setText(task.getTitle());
         
-        // Format timestamp to time string
-        SimpleDateFormat sdf = new SimpleDateFormat("h:mm\na", Locale.getDefault());
-        String timeStr = sdf.format(new Date(task.getTimestamp()));
-        holder.tvTaskTime.setText(timeStr);
+        holder.tvTaskTime.setVisibility(View.GONE);
         
         if ("Done".equals(task.getStatus())) {
             holder.ivCheck.setImageResource(R.drawable.ic_radio_on);
+            holder.ivCheck.setColorFilter(android.graphics.Color.parseColor("#4CAF50"));
+        } else if ("In Progress".equals(task.getStatus())) {
+            holder.ivCheck.setImageResource(R.drawable.ic_progress);
+            holder.ivCheck.setColorFilter(android.graphics.Color.parseColor("#FF9800"));
         } else {
             holder.ivCheck.setImageResource(R.drawable.ic_radio_off);
+            holder.ivCheck.setColorFilter(android.graphics.Color.parseColor("#000000"));
         }
 
+        holder.ivCheck.setOnClickListener(v -> {
+            if (actionListener != null) {
+                actionListener.onStatusToggle(task);
+            }
+        });
+
         holder.ivDelete.setOnClickListener(v -> {
-            if (deleteListener != null) {
-                deleteListener.onDeleteClick(task);
+            if (actionListener != null) {
+                actionListener.onDeleteClick(task);
             }
         });
     }

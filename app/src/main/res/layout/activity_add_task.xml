@@ -61,6 +61,7 @@
             android:orientation="horizontal">
 
             <EditText
+                android:id="@+id/etDay"
                 android:layout_width="70dp"
                 android:layout_height="48dp"
                 android:background="@drawable/input_field"
@@ -69,6 +70,7 @@
                 android:inputType="number" />
 
             <EditText
+                android:id="@+id/etMonth"
                 android:layout_width="70dp"
                 android:layout_height="48dp"
                 android:layout_marginStart="12dp"
@@ -78,6 +80,7 @@
                 android:inputType="number" />
 
             <EditText
+                android:id="@+id/etYear"
                 android:layout_width="100dp"
                 android:layout_height="48dp"
                 android:layout_marginStart="12dp"
@@ -152,7 +155,7 @@
                 app:tint="@color/black" />
 
             <ImageButton
-                android:id="@+id/navTasks"
+                android:id="@+id/navCalendar"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -161,6 +164,7 @@
                 app:tint="@color/black" />
 
             <ImageButton
+                android:id="@+id/navTasks"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -169,6 +173,7 @@
                 app:tint="#9C27B0" />
 
             <ImageButton
+                android:id="@+id/navSettings"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
